@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/cidades', [CidadeController::class, 'index'])->name('cidade.index');
+Route::post('/cidades', [CidadeController::class, 'store'])->name('cidade.store');
+Route::get('/cidades/create', [CidadeController::class, 'create'])->name('cidade.create');
+Route::delete('/cidades/{id}', [CidadeController::class, 'destroy'])->name('cidade.destroy');
+Route::get('/cidades/{id}/edit', [CidadeController::class, 'edit'])->name('cidade.edit');
+Route::put('/cidades/{id}', [CidadeController::class, 'update'])->name('cidade.update');
+
 
 Route::get('/', function () {
     return view('welcome');

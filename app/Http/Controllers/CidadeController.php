@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CidadeRequest;
+use App\Models\Cidade;
 use Illuminate\Http\Request;
 
 class CidadeController extends Controller
@@ -14,11 +16,9 @@ class CidadeController extends Controller
     public function index()
     {
         $subTitulo = 'Lista de Cidades';
-        $cidades = ['Santa Fé do Sul - SP','Jales - SP','Rio Preot - SP'];
-//        $cidades = [];
 
-
-        return view('admin.cidades.index',compact('cidades','subTitulo'));
+        $cidades = Cidade::all();
+        return view('admin.cidades.index', compact('cidades', 'subTitulo'));
     }
 
     /**
@@ -28,62 +28,76 @@ class CidadeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.cidades.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CidadeRequest $request)
     {
-        //
+
+        Cidade::create($request->all());
+        $request->session()->flash('sucesso', "Cidade $request->nome cadastrada com sucesso!");
+        return redirect()->route('cidade.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $cidade = Cidade::findOrFail($id);
+        return view('admin.cidades.edit', compact('cidade'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CidadeRequest $request, $id)
     {
-        //
+        $cidade = Cidade::findOrFail($id);
+        $cidade->update($request->all());
+        $request->session()->flash('sucesso', "Cidade $request->nome alterada com sucesso!");
+        return redirect()->route('cidade.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+
+        $cidade = Cidade::findOrFail($id);
+        $nomeCiddade = $cidade->nome;
+        $cidade->delete();
+        $request->session()->flash('sucesso', "Cidade $nomeCiddade excluida com sucesso!");
+        return redirect()->route('cidade.index');
+
     }
 }
