@@ -20,7 +20,7 @@
             <a href="#" class="brand-logo">My Imóveis</a>
             <ul class="right">
                 <li><a href="#">Imóveis</a></li>
-                <li><a href="{{route('cidade.index')}}">Cidades</a></li>
+                <li><a href="{{route('cidades.index')}}">Cidades</a></li>
 
             </ul>
 
