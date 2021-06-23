@@ -13,7 +13,7 @@ class CreateFotosTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
+//        Schema::disableForeignKeyConstraints();
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
             $table->string('url', 255);
@@ -21,7 +21,7 @@ class CreateFotosTable extends Migration
 
             $table->timestamps();
         });
-        Schema::enableForeignKeyConstraints();
+//        Schema::enableForeignKeyConstraints();
     }
 
     /**

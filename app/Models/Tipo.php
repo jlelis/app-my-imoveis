@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tipo extends Model
 {
     use HasFactory;
+
+    public function imoveis()
+    {
+        return $this->hasMany(Imovel::class);
+    }
 }

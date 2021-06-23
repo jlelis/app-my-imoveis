@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CidadeController;
+use App\Http\Controllers\ImovelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::resource('cidades', CidadeController::class);
-//Route::get('/cidades', [CidadeController::class, 'index'])->name('cidade.index');
-//Route::post('/cidades', [CidadeController::class, 'store'])->name('cidade.store');
-//Route::get('/cidades/create', [CidadeController::class, 'create'])->name('cidade.create');
-//Route::delete('/cidades/{id}', [CidadeController::class, 'destroy'])->name('cidade.destroy');
-//Route::get('/cidades/{id}/edit', [CidadeController::class, 'edit'])->name('cidade.edit');
-//Route::put('/cidades/{id}', [CidadeController::class, 'update'])->name('cidade.update');
+
+Route::resource('imoveis', ImovelController::class);
 
 
 Route::get('/', function () {

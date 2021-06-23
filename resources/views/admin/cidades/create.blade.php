@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 @section('conteudo-principal')
     <section class="section">
-        <form action="{{route('cidade.store')}}" method="post">
+        <form action="{{route('cidades.store')}}" method="post">
             {{-- cross-site request forgery csrf--}}
             @csrf
             <div class="input-field">
