@@ -9,6 +9,8 @@ class Finalidade extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nome'];
+
     public function imoveis()
     {
         return $this->hasMany(Imovel::class);

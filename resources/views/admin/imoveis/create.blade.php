@@ -94,6 +94,73 @@
 
             </div>
 
+            {{-- Terreno Banheirose Garagens --}}
+            <div class="row">
+                <div class="input-field col s3">
+                    <input type="number" name="terreno" id="terreno">
+                    <label for="terreno">Terreno m²: </label>
+                </div>
+
+                <div class="input-field col s3">
+                    <input type="number" name="banheiros" id="banheiros" min="1" max="99">
+                    <label for="banheiros">Quantidade de banheiros</label>
+                </div>
+
+                <div class="input-field col s3">
+                    <input type="number" name="garagens" id="garagens" min="1" max="99">
+                    <label for="garagens">Vagas na garagens</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="number" name="garagens" id="garagens" min="1" max="99">
+                    <label for="garagens">Quantidade de Garagens</label>
+                </div>
+
+            </div>
+            {{--Descrição--}}
+            <div class="row">
+                <div class="input-fiel col s12">
+                    <textarea name="descricao" id="descricao" class="materialize-textarea"></textarea>
+                    <label for="descricao">Descrição</label>
+                </div>
+            </div>
+            {{--endereco--}}
+            <div class="row">
+
+                <div class="input-field col s5">
+                    <input type="text" name="rua" id="rua">
+                    <label for="rua">Rua</label>
+                </div>
+
+                <div class="input-field col s2">
+                    <input type="text" name="numero" id="numero">
+                    <label for="numero">Número</label>
+                </div>
+                <div class="input-field col s2">
+                    <input type="text" name="complemento" id="complemento">
+                    <label for="complemento">Complemento</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="text" name="bairro" id="bairro">
+                    <label for="bairro">Bairro</label>
+                </div>
+
+            </div>
+            {{-- Proximidades--}}
+            <div class="row">
+                <div class="input-field col s12">
+                    <select name="proximidades[]" id="proximidades" class="select" multiple>
+                        <option value="" disabled>Selecione os pontos de interesse nas proximidades</option>
+                        @forelse($proximidades as $proximidade)
+                            <option value="{{$proximidade->id}}">{{$proximidade->nome}} </option>
+                        @empty
+                            <option value="">Não foi possivel carregar os pontos de interesse nas proximidades</option>
+                        @endforelse
+                    </select>
+                    <label for="proximidades">Ponte de interesse nas proximidades</label>
+                </div>
+            </div>
+
+
             {{--buttons--}}
             <div class="right-align">
                 <a href="{{url()->previous()}}" class="btn-flat waves-effect">

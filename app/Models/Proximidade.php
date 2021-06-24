@@ -9,6 +9,8 @@ class Proximidade extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nome'];
+
     public function imoveis()
     {
         return $this->belongsToMany(Imovel::class)->withTimestamps();

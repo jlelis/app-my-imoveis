@@ -4,14 +4,21 @@
         <table class="highlight">
             <thead>
             <tr>
-                <th>Imóveis</th>
+                <th>Cidade</th>
+                <th>Bairro</th>
+                <th>Título</th>
                 <th class="right-align">Opções</th>
             </tr>
             </thead>
             <tbody>
             @forelse($imoveis as $imovel)
                 <tr>
-                    <td>{{$imovel->nome}}</td>
+                    <td>{{$imovel->cidade->nome}}</td>
+                    {{--                    <td>Bairro</td>--}}
+                    <td>{{$imovel->endereco->bairro}}</td>
+                    <td>{{$imovel->titulo}}</td>
+
+
                     <td class="right-align">
                         <a href="{{route('imoveis.edit',$imovel->id)}}" class="">
                         <span>
@@ -31,7 +38,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="2">Não existem Imóveis cadastradas.</td>
+                    <td colspan="4">Não existem Imóveis cadastradas.</td>
                 </tr>
 
             @endforelse

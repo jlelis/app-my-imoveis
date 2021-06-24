@@ -13,7 +13,7 @@ class CreateEnderecosTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
+//        Schema::disableForeignKeyConstraints();
         Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
             $table->string('rua', 100);
@@ -24,7 +24,7 @@ class CreateEnderecosTable extends Migration
 
             $table->timestamps();
         });
-        Schema::enableForeignKeyConstraints();
+//        Schema::enableForeignKeyConstraints();
     }
 
     /**
