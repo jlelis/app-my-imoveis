@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImovelRequest;
 use App\Models\Cidade;
 use App\Models\Finalidade;
 use App\Models\Imovel;
 use App\Models\Proximidade;
 use App\Models\Tipo;
-use Illuminate\Http\Request;
+use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 
 class ImovelController extends Controller
@@ -52,7 +53,7 @@ class ImovelController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ImovelRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -109,7 +110,7 @@ class ImovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ImovelRequest $request, $id)
     {
         //
     }
@@ -120,9 +121,33 @@ class ImovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $imovel = Imovel::findOrFail($id);
-        dd($imovel);
+
+        DB::beginTransaction();
+
+        try {
+
+            //remover o endereco
+            $imovel->endereco->delete();
+
+            //Remover o imovel
+            $imovel->delete();
+
+
+            DB::commit();
+
+            $request->session()->flash('sucesso', 'Imóvel excluído com sucesso!');
+            return redirect()->route('imoveis.index');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return redirect()->route('imoveis.index')
+                ->with('warning', 'Something Went Wrong!');
+
+        }
     }
 }

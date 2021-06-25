@@ -20,7 +20,8 @@
                     <select name="cidade_id" id="cidade_id">
                         <option value="" disabled selected>Selecione a Cidade</option>
                         @forelse($cidades as $cidade)
-                            <option value="{{$cidade->id}}">{{$cidade->nome}}</option>
+                            <option
+                                value="{{$cidade->id}}" {{old('cidade_id') == $cidade->id ? 'selected': ''}}>{{$cidade->nome}}</option>
                         @empty
                             <option value="" disabled selected>Não possivel carregar as cidades</option>
                         @endforelse
@@ -34,7 +35,8 @@
                     <select name="tipo_id" id="tipo_id">
                         <option value="" disabled selected>Selecione um Tipo Imóvel</option>
                         @forelse($tipos as $tipo)
-                            <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                            <option
+                                value="{{$tipo->id}}" {{old('tipo_id') == $tipo->id ? 'selected': ''}}>{{$tipo->nome}}</option>
                         @empty
                             <option value="" disabled selected>Não possivel carregar as tipos</option>
                         @endforelse
@@ -62,7 +64,7 @@
                     <span class="col s2">
                         <label style="margin-right: 30px">
                         <input type="radio" name="finalidade_id" id="finalidade_id" class="with-gap"
-                               value="{{$finalidade->id}}"/>
+                               value="{{$finalidade->id}} {{old('finalidade_id') == $finalidade->id ? 'checked': ''}}"/>
                             <span>{{$finalidade->nome}}</span>
                             </label>
                     </span>
@@ -73,90 +75,128 @@
             </div>
             {{-- Preço Dormitorios Salas --}}
             <div class="row">
-                <div class="input-field col s3">
-                    <input type="number" name="preco" id="preco">
+                <div class="input-field col s4">
+                    <input type="number" name="preco" id="preco" value="{{old('preco')}}">
                     <label for="preco">Preço</label>
+                    @error('preco')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
-                <div class="input-field col s3">
-                    <input type="number" name="dormitorios" id="dormitorios" min="1" max="99">
+                <div class="input-field col s4">
+                    <input type="number" name="dormitorios" id="dormitorios" min="1" max="99"
+                           value="{{old('dormitorios')}}">
                     <label for="dormitorios">Quantidade Dormitórios</label>
+                    @error('dormitorios')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
-                <div class="input-field col s3">
-                    <input type="number" name="salas" id="salas" min="1" max="99">
+                <div class="input-field col s4">
+                    <input type="number" name="salas" id="salas" min="1" max="99" value="{{old('salas')}}">
                     <label for="salas">Quantidade de Salas</label>
-                </div>
-                <div class="input-field col s3">
-                    <input type="number" name="garagens" id="garagens" min="1" max="99">
-                    <label for="garagens">Quantidade de Garagens</label>
+                    @error('salas')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
             </div>
 
             {{-- Terreno Banheirose Garagens --}}
             <div class="row">
-                <div class="input-field col s3">
-                    <input type="number" name="terreno" id="terreno">
+                <div class="input-field col s4">
+                    <input type="number" name="terreno" id="terreno" value="{{old('terreno')}}">
                     <label for="terreno">Terreno m²: </label>
+                    @error('terreno')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
-                <div class="input-field col s3">
-                    <input type="number" name="banheiros" id="banheiros" min="1" max="99">
+                <div class="input-field col s4">
+                    <input type="number" name="banheiros" id="banheiros" min="1" max="99" value="{{old('banheiros')}}">
                     <label for="banheiros">Quantidade de banheiros</label>
+                    @error('banheiros')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
-                <div class="input-field col s3">
-                    <input type="number" name="garagens" id="garagens" min="1" max="99">
+                <div class="input-field col s4">
+                    <input type="number" name="garagens" id="garagens" min="1" max="99" value="{{old('garagens')}}">
                     <label for="garagens">Vagas na garagens</label>
-                </div>
-                <div class="input-field col s3">
-                    <input type="number" name="garagens" id="garagens" min="1" max="99">
-                    <label for="garagens">Quantidade de Garagens</label>
+                    @error('garagens')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
             </div>
+
             {{--Descrição--}}
             <div class="row">
                 <div class="input-fiel col s12">
-                    <textarea name="descricao" id="descricao" class="materialize-textarea"></textarea>
+                    <textarea name="descricao" id="descricao"
+                              class="materialize-textarea">{{old('descricao')}}</textarea>
                     <label for="descricao">Descrição</label>
+                    @error('descricao')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
             </div>
+
             {{--endereco--}}
             <div class="row">
 
-                <div class="input-field col s5">
-                    <input type="text" name="rua" id="rua">
+                <div class="input-field col s2">
+                    <input type="text" name="rua" id="rua" value="{{old('rua')}}">
                     <label for="rua">Rua</label>
+                    @error('rua')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
                 <div class="input-field col s2">
-                    <input type="text" name="numero" id="numero">
+                    <input type="text" name="numero" id="numero" value="{{old('numero')}}">
                     <label for="numero">Número</label>
+                    @error('numero')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
                 <div class="input-field col s2">
-                    <input type="text" name="complemento" id="complemento">
+                    <input type="text" name="complemento" id="complemento" value="{{old('complemento')}}">
                     <label for="complemento">Complemento</label>
+                    @error('complemento')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
                 <div class="input-field col s3">
-                    <input type="text" name="bairro" id="bairro">
+                    <input type="text" name="bairro" id="bairro" value="{{old('bairro')}}">
                     <label for="bairro">Bairro</label>
+                    @error('bairro')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
 
             </div>
+
             {{-- Proximidades--}}
             <div class="row">
                 <div class="input-field col s12">
                     <select name="proximidades[]" id="proximidades" class="select" multiple>
                         <option value="" disabled>Selecione os pontos de interesse nas proximidades</option>
+
                         @forelse($proximidades as $proximidade)
-                            <option value="{{$proximidade->id}}">{{$proximidade->nome}} </option>
+                            <option value="{{$proximidade->id}}"
+                            @if(old('proximidades'))
+                                {{ in_array($proximidade->id,old('proximidades')) ? 'selected' : '' }}
+                                @endif>{{$proximidade->nome}}
+                            </option>
                         @empty
                             <option value="">Não foi possivel carregar os pontos de interesse nas proximidades</option>
                         @endforelse
                     </select>
-                    <label for="proximidades">Ponte de interesse nas proximidades</label>
+                    <label for="proximidades">Pontos de interesse nas proximidades</label>
+                    @error('proximidades')
+                    <span class="red-text text-accent-3"><small>{{$message}}</small></span>
+                    @enderror
                 </div>
             </div>
 
