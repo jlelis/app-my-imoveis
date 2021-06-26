@@ -100,7 +100,15 @@ class ImovelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $imovel = Imovel::with(['cidade', 'endereco', 'finalidade', 'proximidades'])->findOrFail($id);
+        $cidades = Cidade::all();
+        $finalidades = Finalidade::all();
+        $proximidades = Proximidade::all();
+        $tipos = Tipo::all();
+
+        $action = route('imoveis.update', $imovel->id);
+        return view('admin.imoveis.edit',
+            compact('action', 'imovel', 'cidades', 'finalidades', 'tipos', 'proximidades'));
     }
 
     /**
@@ -112,7 +120,25 @@ class ImovelController extends Controller
      */
     public function update(ImovelRequest $request, $id)
     {
-        //
+        $imovel = Imovel::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $imovel->update($request->all());
+            $imovel->endereco->update($request->all());
+
+            if ($request->has('proximidades')) {
+                $imovel->proximidades()->sync($request->proximidades);
+            }
+            DB::commit();
+
+            $request->session()->flash('sucesso', 'Imóvel Atualizado com sucesso!');
+            return redirect()->route('imoveis.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('imoveis.index')
+                ->with('warning', 'Something Went Wrong!');
+
+        }
     }
 
     /**
@@ -121,7 +147,8 @@ class ImovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public
+    function destroy(Request $request, $id)
     {
         $imovel = Imovel::findOrFail($id);
 
