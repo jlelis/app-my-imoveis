@@ -11,8 +11,8 @@
                 <span class="red-text text-accent-3"><small>{{$message}}</small></span>
                 @enderror
             </div>
-            <div class="right-align">
-                <a href="{{url()->previous()}}" class="btn-flat waves-effect">
+            <div class="right-align ">
+                <a href="{{route('cidades.index')}}" class="btn-flat waves-effect">
                     Cancelar
                 </a>
                 <button class="btn waves-effect waves-light" type="submit">

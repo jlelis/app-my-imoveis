@@ -6,6 +6,7 @@ use App\Http\Requests\CidadeRequest;
 use App\Models\Cidade;
 use Illuminate\Http\Request;
 
+
 class CidadeController extends Controller
 {
     /**
@@ -79,8 +80,9 @@ class CidadeController extends Controller
     public function update(CidadeRequest $request, $id)
     {
         $cidade = Cidade::findOrFail($id);
+        $nomeCidade = $cidade->getRawOriginal('nome');
         $cidade->update($request->all());
-        $request->session()->flash('sucesso', "Cidade $request->nome alterada com sucesso!");
+        $request->session()->flash('sucesso', "Cidade $nomeCidade alterada com sucesso!");
         return redirect()->route('cidades.index');
     }
 
@@ -90,14 +92,20 @@ class CidadeController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy(Request $request, $id)
     {
-
         $cidade = Cidade::findOrFail($id);
-        $nomeCiddade = $cidade->nome;
-        $cidade->delete();
-        $request->session()->flash('sucesso', "Cidade $nomeCiddade excluida com sucesso!");
-        return redirect()->route('cidade.index');
+        $nomeCidadeOld = $cidade->nome;
+        $totalCount = $cidade->imoveis->count();
+        try {
+            $cidade->delete();
+            $request->session()->flash('sucesso', "Cidade $nomeCidadeOld excluida com sucesso!");
+            return redirect()->route('cidades.index');
+
+        } catch (\Exception $e) {
+            $request->session()->flash('erro', "Cidade $nomeCidadeOld náo poderá ser excluida!");
+            return redirect()->route('cidades.index');
+        }
 
     }
 }

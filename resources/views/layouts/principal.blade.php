@@ -65,16 +65,18 @@
     M.AutoInit();
     @if(session('sucesso'))
     M.toast({html: "{{session('sucesso')}}"});
+    @elseif(session('erro'))
+    M.toast({html: "{{session('erro')}}"});
     @endif
     {{-- Selects --}}
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems, options);
+        var instances = M.FormSelect.init(elems);
     });
     {{-- Menu Mobile --}}
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, options);
+        var instances = M.Sidenav.init(elems);
     });
 
 

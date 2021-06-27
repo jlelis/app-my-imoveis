@@ -50,11 +50,11 @@ class ImovelRequest extends FormRequest
     public function attributes()
     {
         return [
-
+            'tituto' => 'título',
             'cidade_id' => 'cidade',
             'tipo_id' => 'tipo de imóvel',
             'finalidade_id' => 'finalidade',
-            'preoc' => 'preço',
+            'preco' => 'preço',
             'dormitorios' => 'quantidade de domitórios',
             'salas' => 'quantidade de salas',
             'banheiros' => 'quantidade de banheiros',

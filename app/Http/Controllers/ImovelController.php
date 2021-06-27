@@ -8,7 +8,7 @@ use App\Models\Finalidade;
 use App\Models\Imovel;
 use App\Models\Proximidade;
 use App\Models\Tipo;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ImovelController extends Controller

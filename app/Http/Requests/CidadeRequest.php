@@ -25,7 +25,7 @@ class CidadeRequest extends FormRequest
     {
 
         return [
-            'nome' => ['bail', 'required','min:3'],
+            'nome' => ['bail', 'required', 'min:3', 'unique:cidades'],
         ];
     }
 }

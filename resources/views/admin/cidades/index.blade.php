@@ -21,7 +21,7 @@
                         <form action="{{route('cidades.destroy',$cidade->id)}}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" style="border: 0;background: transparent;">
+                            <button type="submit" style="border: 0;background: transparent; ">
                                 <span style="cursor: pointer;">
                                     <i class="material-icons red-text accent-3">delete_forever</i>
                                 </span>
@@ -39,12 +39,15 @@
         </table>
 
         {{--        btn-floating btn-large waves-effect waves-light--}}
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large waves-effect waves-light" href="{{route('cidades.create')}}">
-                <i class="large material-icons">add</i>
-            </a>
+        <div class="row">
+            <div class="center-align">
+                <div class="fixed-action-btn">
+                    <a class="btn-floating btn-large waves-effect waves-light" href="{{route('cidades.create')}}">
+                        <i class="large material-icons">add</i>
+                    </a>
+                </div>
+            </div>
         </div>
-
 
     </section>
 @endsection
