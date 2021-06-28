@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             TipoSeeder::class,
             FinalidadeSeeder::class,
             ProximidadeSeeder::class,
+            CidadeSeeder::class,
+            ImovelSeeder::class,
+            EnderecoSeeder::class,
 
         ]);
     }

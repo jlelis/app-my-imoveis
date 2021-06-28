@@ -20,5 +20,5 @@ Route::resource('imoveis', ImovelController::class);
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('imoveis.index');
 });
