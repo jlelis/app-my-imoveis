@@ -14,8 +14,12 @@ class CreateImovelProximidadeTable extends Migration
     public function up()
     {
         Schema::create('imovel_proximidade', function (Blueprint $table) {
-            $table->foreignId('imovel_id')->constrained('imoveis');
-            $table->foreignId('proximidade_id')->constrained();
+            $table->foreignId('imovel_id')->constrained('imoveis')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+            $table->foreignId('proximidade_id')->constrained()
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
             $table->timestamps();
 

@@ -61,7 +61,7 @@ class ImovelController extends Controller
             $imovel = Imovel::create($request->all());
             $imovel->endereco()->create($request->all());
 
-            if ($request->has('proximidade')) {
+            if ($request->has('proximidades')) {
 //                $imovel->proximidades()->attach($request->proximidades);
 //                $imovel->proximidades()->detach($request->proximidades);
                 $imovel->proximidades()->sync($request->proximidades);
@@ -127,17 +127,18 @@ class ImovelController extends Controller
             $imovel->update($request->all());
             $imovel->endereco->update($request->all());
 
-            if ($request->has('proximidades')) {
+            // if ($request->has('proximidades')) {
                 $imovel->proximidades()->sync($request->proximidades);
-            }
+            // }
             DB::commit();
 
             $request->session()->flash('sucesso', 'Imóvel Atualizado com sucesso!');
             return redirect()->route('imoveis.index');
         } catch (\Exception $e) {
+            $request->session()->flash('erro', 'Erro Imóvel não foi Atualizado !'.$e->getMessage());
             DB::rollBack();
-            return redirect()->route('imoveis.index')
-                ->with('warning', 'Something Went Wrong!');
+            return redirect()->route('imoveis.index');
+                // ->with('warning', 'Something Went Wrong!');
 
         }
     }
@@ -172,9 +173,9 @@ class ImovelController extends Controller
         } catch (\Exception $e) {
 
             DB::rollBack();
-
-            return redirect()->route('imoveis.index')
-                ->with('warning', 'Something Went Wrong!');
+            $request->session()->flash('erro', 'Erro Imóvel não foi Atualizado !'.$e->getMessage());
+            return redirect()->route('imoveis.index');
+                // ->with('warning', 'Something Went Wrong!');
 
         }
     }
