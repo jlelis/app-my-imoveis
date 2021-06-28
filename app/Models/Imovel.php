@@ -22,7 +22,8 @@ class Imovel extends Model
         'preco',
         'cidade_id',
         'tipo_id',
-        'finalidade_id'
+        'finalidade_id',
+
     ];
 
     public function endereco()

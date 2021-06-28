@@ -23,9 +23,10 @@ class ImovelSeeder extends Seeder
             'garagens' => '3',
             'descricao' => 'casa para aluguel aceitamos fiador ou seguro aluguel',
             'preco' => '1600.00',
-            'cidade_id' => '1',
-            'tipo_id' => '2',
-            'finalidade_id' => '1',
+            'cidade_id' => 1,
+            'tipo_id' => 2,
+            'finalidade_id' => 1,
+
         ]);
     }
 }

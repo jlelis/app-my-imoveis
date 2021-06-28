@@ -7,6 +7,7 @@
                 <th>Cidade</th>
                 <th>Bairro</th>
                 <th>Título</th>
+                <th>Preço R$</th>
                 <th class="right-align">Opções</th>
             </tr>
             </thead>
@@ -17,6 +18,7 @@
                     {{--                    <td>Bairro</td>--}}
                     <td>{{$imovel->endereco->bairro}}</td>
                     <td>{{$imovel->titulo}}</td>
+                    <td>R$ {{number_format($imovel->preco, 2, ',', '.')}}</td>
 
 
                     <td class="right-align">
