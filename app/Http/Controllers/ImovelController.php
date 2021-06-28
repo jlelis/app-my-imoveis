@@ -74,8 +74,9 @@ class ImovelController extends Controller
             return redirect()->route('imoveis.index');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('imoveis.index')
-                ->with('warning', 'Something Went Wrong!');
+            $request->session()->flash('erro', 'Imóvel Cadastrado com sucesso!'.$e->getMessage());
+            return redirect()->route('imoveis.index');
+//                ->with('warning', 'Something Went Wrong!');
 
         }
 

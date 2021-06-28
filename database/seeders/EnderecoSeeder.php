@@ -16,7 +16,7 @@ class EnderecoSeeder extends Seeder
     {
         Endereco::create([
             'rua' => 'Av. dos Almirantes', 'numero' => '1234',
-            'bairro' => 'Centro', 'imovel_id' => 1,
+            'bairro' => 'Centro',
         ]);
     }
 }

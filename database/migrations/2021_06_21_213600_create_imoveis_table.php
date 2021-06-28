@@ -21,7 +21,7 @@ class CreateImoveisTable extends Migration
             $table->integer('banheiros');
             $table->integer('dormitorios');
             $table->integer('garagens');
-            $table->text('descricao');
+            $table->text('descricao')->nullable();
             $table->decimal('preco', 12, 2);
             $table->foreignId('cidade_id')->constrained();
             $table->foreignId('tipo_id')->constrained();

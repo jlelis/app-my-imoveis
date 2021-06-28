@@ -199,18 +199,7 @@
                     <option value="" disabled>Selecione os pontos de interesse nas proximidades</option>
 
                     @forelse($proximidades as $proximidade)
-                        <option value="{{$proximidade->id}}"
-                        @if(old('proximidades'))
-                            {{ in_array($proximidade->id,old('proximidades')) ? 'selected' : '' }}
-
-                            @else
-                            @isset($imovel)
-                                {{$imovel->proximidades->contains($proximidade->id) ? 'selected' : '' }}
-
-                                @endisset
-                            @endif
-                        >{{$proximidade->nome}}
-                        </option>
+                        <option value="{{$proximidade->id}}" @if(old('proximidades')) {{ in_array($proximidade->id,old('proximidades')) ? 'selected' : '' }} @else @isset($imovel) {{$imovel->proximidades->contains($proximidade->id) ? 'selected' : '' }} @endisset @endif >{{$proximidade->nome}}</option>
                     @empty
                         <option value="">Não foi possivel carregar os pontos de interesse nas proximidades</option>
                     @endforelse

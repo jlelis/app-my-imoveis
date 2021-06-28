@@ -9,7 +9,7 @@ class Endereco extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['rua', 'numero', 'bairro', 'complemento','imovel_id'];
+    protected $fillable = ['rua', 'numero', 'bairro', 'complemento'];
 
     public function imovel()
     {
