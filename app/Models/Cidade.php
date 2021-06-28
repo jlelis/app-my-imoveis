@@ -10,7 +10,7 @@ class Cidade extends Model
     use HasFactory;
 
     protected $table = 'cidades';
-    protected $fillable = ['nome'];
+    protected $fillable = ['nome','imovel_id'];
 
     public function imoveis()
     {
