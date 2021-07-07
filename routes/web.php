@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\ImovelController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::resource('cidades', CidadeController::class);
 
 Route::resource('imoveis', ImovelController::class);
+
+Route::resource('products', ProductController::class);
 
 
 Route::get('/', function () {
