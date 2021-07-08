@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 @section('conteudo-principal')
     <section class="section">
-        <form action="{{$action}}" method="post">
+        <form action="{{$action}}" method="post" enctype="multipart/form-data">
             {{-- cross-site request forgery csrf--}}
             @csrf
             {{--Titulo--}}
@@ -86,7 +86,7 @@
             {{-- Preço Dormitorios Salas --}}
             <div class="row">
                 <div class="input-field col s12 m4 l4">
-                    <input type="number" name="preco" id="preco" min="1" value="{{old('preco')}}">
+                    <input type="number" name="preco" id="preco" min="0.00" max="999999.00" value="{{old('preco')}}" step="0.01">
                     <label for="preco">Preço R$</label>
                     @error('preco')
                     <span class="red-text text-accent-3"><small>{{$message}}</small></span>
@@ -207,6 +207,17 @@
                 </div>
             </div>
 
+            {{--Anexo de fotos--}}
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file" name="imovel_fotos[]" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                </div>
+            </div>
+
 
             {{--buttons--}}
             <div class="row">
@@ -224,5 +235,6 @@
         </form>
 
     </section>
+
 
 @endsection

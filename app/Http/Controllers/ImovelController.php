@@ -6,6 +6,7 @@ use App\Http\Requests\ImovelRequest;
 use App\Models\Cidade;
 use App\Models\Finalidade;
 use App\Models\Imovel;
+use App\Models\ImovelFoto;
 use App\Models\Proximidade;
 use App\Models\Tipo;
 use Illuminate\Http\Request;
@@ -68,13 +69,27 @@ class ImovelController extends Controller
 
             }
 
+            //anexar de fotos
+            if ($request->hasFile('imovel_fotos')) {
+
+                foreach ($request->file('imovel_fotos') as $file) {
+
+                    $filename = $file->store('photos', 'public');
+
+                    ImovelFoto::create([
+                        'imovel_id' => $imovel->id,
+                        'path_images' => $filename,
+                    ]);
+                }
+            }
+
             DB::commit();
 
             $request->session()->flash('sucesso', 'Imóvel Cadastrado com sucesso!');
             return redirect()->route('imoveis.index');
         } catch (\Exception $e) {
             DB::rollBack();
-            $request->session()->flash('erro', 'Imóvel Cadastrado com sucesso!'.$e->getMessage());
+            $request->session()->flash('erro', 'Imóvel Cadastrado com sucesso!' . $e->getMessage());
             return redirect()->route('imoveis.index');
 //                ->with('warning', 'Something Went Wrong!');
 
@@ -90,7 +105,7 @@ class ImovelController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -128,17 +143,31 @@ class ImovelController extends Controller
             $imovel->endereco->update($request->all());
 
             // if ($request->has('proximidades')) {
-                $imovel->proximidades()->sync($request->proximidades);
+            $imovel->proximidades()->sync($request->proximidades);
             // }
+            //anexar de fotos
+            if ($request->hasFile('imovel_fotos')) {
+
+                foreach ($request->file('imovel_fotos') as $file) {
+
+                    $filename = $file->store('photos', 'public');
+
+                    ImovelFoto::create([
+                        'imovel_id' => $imovel->id,
+                        'path_images' => $filename,
+                    ]);
+                }
+            }
+
             DB::commit();
 
             $request->session()->flash('sucesso', 'Imóvel Atualizado com sucesso!');
             return redirect()->route('imoveis.index');
         } catch (\Exception $e) {
-            $request->session()->flash('erro', 'Erro Imóvel não foi Atualizado !'.$e->getMessage());
+            $request->session()->flash('erro', 'Erro Imóvel não foi Atualizado !' . $e->getMessage());
             DB::rollBack();
             return redirect()->route('imoveis.index');
-                // ->with('warning', 'Something Went Wrong!');
+            // ->with('warning', 'Something Went Wrong!');
 
         }
     }
@@ -157,6 +186,7 @@ class ImovelController extends Controller
         DB::beginTransaction();
 
         try {
+            $image = ImovelFoto::findOrFail($request->imovel->id);
 
             //remover o endereco
             $imovel->endereco->delete();
@@ -173,9 +203,9 @@ class ImovelController extends Controller
         } catch (\Exception $e) {
 
             DB::rollBack();
-            $request->session()->flash('erro', 'Erro Imóvel não foi Atualizado !'.$e->getMessage());
+            $request->session()->flash('erro', 'Erro Imóvel não foi Atualizado !' . $e->getMessage());
             return redirect()->route('imoveis.index');
-                // ->with('warning', 'Something Went Wrong!');
+            // ->with('warning', 'Something Went Wrong!');
 
         }
     }

@@ -18,7 +18,7 @@ class CreateEnderecosTable extends Migration
             $table->id();
             $table->string('rua', 100);
             $table->string('numero', 10);
-            $table->string('complemento', 10)->nullable();
+            $table->string('complemento', 50)->nullable();
             $table->string('bairro', 100);
             $table->foreignId('imovel_id')->constrained('imoveis')
             ->onUpdate('cascade')

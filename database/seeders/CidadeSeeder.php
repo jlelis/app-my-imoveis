@@ -18,6 +18,7 @@ class CidadeSeeder extends Seeder
             'São Paulo - SP', 'Belo Horizonte - MG', 'Curitiba - PR',
             'Itajai - SC', 'Aparecida do Taboado - MS', 'São José do Rio Preto - SP'
         ];
+        sort($nomes);
         foreach ($nomes as $nome) {
             Cidade::create([
                 'nome' => $nome

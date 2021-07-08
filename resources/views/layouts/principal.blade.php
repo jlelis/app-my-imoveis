@@ -80,6 +80,9 @@
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems);
     });
+    {{-- textarea redimencionar auto--}}
+    M.textareaAutoResize($('#descricao'));
+
 
 
 </script>

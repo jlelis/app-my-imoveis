@@ -15,6 +15,7 @@ class ProximidadeSeeder extends Seeder
     public function run()
     {
         $nomes = ['Banco', 'Praça', 'Posto de Combustivel', 'Mercado', 'Posto de Saúde', 'Padaria'];
+        sort($nomes);
         foreach ($nomes as $nome) {
             Proximidade::create([
                 'nome' => $nome

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CidadeRequest;
 use App\Models\Cidade;
-use App\Models\ProductPhoto;
 use Illuminate\Http\Request;
 
 
@@ -43,19 +42,6 @@ class CidadeController extends Controller
     {
 
         $cidade = Cidade::create($request->all());
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $file) {
-
-                $filename = $file->store('photos', 'public');
-
-                ProductPhoto::create([
-                    'cidade_id' => $cidade->id,
-                    'path_images' => $filename,
-                ]);
-            }
-        }
-
-
 
         $request->session()->flash('sucesso', "Cidade $request->nome cadastrada com sucesso!");
         return redirect()->route('cidades.index');

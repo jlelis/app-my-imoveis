@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 @section('conteudo-principal')
     <section class="section">
-        <table class="highlight">
+        <table class="highlight centered text-wrap" id="datatable">
             <thead>
             <tr>
                 <th>Cidade</th>
@@ -22,12 +22,17 @@
 
 
                     <td class="right-align">
-                        <a href="{{route('imoveis.edit',$imovel->id)}}" class="">
+                        <a href="{{route('imoveis.show',$imovel->id)}}">
+                            <span>
+                            <i class="material-icons green-text accent-2 ">visibility</i>
+                            </span>
+                        </a>
+                        <a href="{{route('imoveis.edit',$imovel->id)}}" class="hide-on-med-and-down">
                         <span>
                             <i class="material-icons blue-text accent-2">edit</i>
                         </span>
                         </a>
-                        <form action="{{route('imoveis.destroy',$imovel->id)}}" method="post" style="display: inline;">
+                        <form action="{{route('imoveis.destroy',$imovel->id)}}" method="post" style="display: inline;" class="hide-on-med-and-down">
                             @csrf
                             @method('DELETE')
                             <button type="submit" style="border: 0;background: transparent;">
