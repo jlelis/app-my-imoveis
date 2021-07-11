@@ -21,14 +21,20 @@ class ImovelController extends Controller
      */
     public function index()
     {
-        $imoveis = Imovel::join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
-            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
-            ->orderBy('cidades.nome', 'asc')
-            ->orderBy('enderecos.bairro', 'asc')
-            ->orderBy('titulo', 'asc')
+        $imoveis = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
+//            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
+//            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
+//            //fotos
+//            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
+//            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
+//            ->orderBy('cidades.nome', 'asc')
+//            ->orderBy('enderecos.bairro', 'asc')
+//            ->orderBy('titulo', 'asc')
             ->get();
+//        dd($imoveis);
 
-        return view('admin.imoveis.index', compact('imoveis'));
+        return view('index', compact('imoveis',));
+//        return view('admin.imoveis.index', compact('imoveis'));
     }
 
     /**
@@ -81,6 +87,13 @@ class ImovelController extends Controller
                         'path_images' => $filename,
                     ]);
                 }
+            } else {
+                //foto default
+                $filename = "photos/default_200x200.png";
+                ImovelFoto::create([
+                    'imovel_id' => $imovel->id,
+                    'path_images' => $filename,
+                ]);
             }
 
             DB::commit();
@@ -105,7 +118,20 @@ class ImovelController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+
+        $imovel = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])->findOrFail($id);
+//        dd($imovel);
+//            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
+//            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
+        //fotos
+//            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
+//            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
+//            ->orderBy('cidades.nome', 'asc')
+//            ->orderBy('enderecos.bairro', 'asc')
+//            ->orderBy('titulo', 'asc')
+//            ->find($id)->get();
+
+        return view('show', compact('imovel'));
     }
 
     /**
@@ -178,8 +204,7 @@ class ImovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
         $imovel = Imovel::findOrFail($id);
 

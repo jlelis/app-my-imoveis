@@ -25,6 +25,14 @@
     {{--            integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q=="--}}
     {{--            crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
 
+    <style>
+        p.big {
+            line-height: 1.5;
+        }
+        .carousel-slider {
+            height: 400px !important;
+        }
+    </style>
     <title>my-app-imóveis</title>
 </head>
 <body>
@@ -33,7 +41,7 @@
 <nav>
     <div class="container">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">My Imóveis</a>
+            <a href="/" class="brand-logo">My Imóveis</a>
             <a href="#" data-target="mobile-nav" class="sidenav-trigger">
                 <i class="material-icons">menu</i>
             </a>
@@ -80,6 +88,8 @@
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems);
     });
+    {{-- Carrosel--}}
+
     {{-- textarea redimencionar auto--}}
     M.textareaAutoResize($('#descricao'));
 

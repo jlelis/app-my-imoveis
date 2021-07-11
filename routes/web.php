@@ -19,9 +19,6 @@ Route::resource('cidades', CidadeController::class);
 
 Route::resource('imoveis', ImovelController::class);
 
-Route::resource('products', ProductController::class);
-
-
 Route::get('/', function () {
     return redirect()->route('imoveis.index');
 });

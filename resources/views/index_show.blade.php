@@ -13,7 +13,7 @@
             </thead>
             <tbody>
             @forelse($imoveis as $imovel)
-                <tr style="word-break:break-all;">
+                <tr>
                     <td>{{$imovel->cidade->nome}}</td>
                     {{--                    <td>Bairro</td>--}}
                     <td>{{$imovel->endereco->bairro}}</td>
@@ -32,8 +32,7 @@
                             <i class="material-icons blue-text accent-2">edit</i>
                         </span>
                         </a>
-                        <form action="{{route('imoveis.destroy',$imovel->id)}}" method="post" style="display: inline;"
-                              class="hide-on-med-and-down">
+                        <form action="{{route('imoveis.destroy',$imovel->id)}}" method="post" style="display: inline;" class="hide-on-med-and-down">
                             @csrf
                             @method('DELETE')
                             <button type="submit" style="border: 0;background: transparent;">
