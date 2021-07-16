@@ -9,21 +9,20 @@
                 <div class="col s12 m4 l4">
 
                     <div class="card hoverable">
-                        <div class="card large ">
+                        <div class="card  large">
                             <div class="card-image ">
                                 <div class="carousel carousel-slider" data-indicators="true">
 
                                     @forelse($imovel->imovelFotos as $foto)
 
                                         <a class="carousel-item" href="{{route('imoveis.show',$imovel->id)}}">
-                                            <img src="{{asset('storage/'.$foto->path_images)}}"
-                                                 class="responsive-img">
+                                            <img src="{{$foto->path_images}}" class="responsive-img" style="width: 100%; height: 100%;">
                                         </a>
 
                                     @empty
                                     @endforelse
                                 </div>
-                                <span class="card-title orange-text darken-4"><strong>{{$imovel->finalidade->nome}}</strong></span>
+                                <span class="card-title"><strong>{{$imovel->finalidade->nome}}</strong></span>
                             </div>
 
                             <div class="card-content">

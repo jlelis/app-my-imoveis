@@ -80,21 +80,16 @@ class ImovelController extends Controller
 
                 foreach ($request->file('imovel_fotos') as $file) {
 
-                    $filename = $file->store('photos', 'public');
+//                    $filename = $file->store('photos', 'public');
+                    $filename = $file->storeOnCloudinary('imoveis/' . $imovel->id)->getSecurePath();
 
                     ImovelFoto::create([
                         'imovel_id' => $imovel->id,
                         'path_images' => $filename,
                     ]);
                 }
-            } else {
-                //foto default
-                $filename = "photos/default_200x200.png";
-                ImovelFoto::create([
-                    'imovel_id' => $imovel->id,
-                    'path_images' => $filename,
-                ]);
             }
+
 
             DB::commit();
 
@@ -171,18 +166,26 @@ class ImovelController extends Controller
             // if ($request->has('proximidades')) {
             $imovel->proximidades()->sync($request->proximidades);
             // }
+
             //anexar de fotos
             if ($request->hasFile('imovel_fotos')) {
 
                 foreach ($request->file('imovel_fotos') as $file) {
 
-                    $filename = $file->store('photos', 'public');
+                    $filename = $file->storeOnCloudinary('imoveis/' . $imovel->id)->getSecurePath();
 
                     ImovelFoto::create([
                         'imovel_id' => $imovel->id,
                         'path_images' => $filename,
                     ]);
                 }
+            } else {
+                //foto default
+                $filename = "photos/default_200x200.png";
+                ImovelFoto::create([
+                    'imovel_id' => $imovel->id,
+                    'path_images' => $filename,
+                ]);
             }
 
             DB::commit();
@@ -211,7 +214,6 @@ class ImovelController extends Controller
         DB::beginTransaction();
 
         try {
-            $image = ImovelFoto::findOrFail($request->imovel->id);
 
             //remover o endereco
             $imovel->endereco->delete();

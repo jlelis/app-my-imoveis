@@ -5,11 +5,11 @@
 
         <div class="row">
             <div class="col s12 m6 l6">
-                <div class="carousel carousel-slider " data-indicators="true">
+                <div class="carousel carousel-slider " data-indicators="true" >
 
                     @forelse($imovel->imovelFotos as $foto)
                         <a class="carousel-item" href="#">
-                            <img src="{{asset('storage/'.$foto->path_images)}}" class="responsive-img">
+                            <img src="{{$foto->path_images}}" class="responsive-img" style="width: 100%; height: 100%;">
                         </a>
                     @empty
                     @endforelse
@@ -45,19 +45,19 @@
         </div>
         <hr>
         <div>
-            <a href="{{url()->previous()}}" class="btn-flat waves-effect yellow">
+            <a href="{{url()->previous()}}" class="btn-flat waves-effect  white-text red lighten-3">
                 Voltar
             </a>
-            <a href="{{route('imoveis.edit',$imovel->id)}}" class="btn-flat waves-effect blue">
-                        Editar
+            <a href="{{route('imoveis.edit',$imovel->id)}}" class="btn-flat waves-effect white-text blue">
+                Editar
             </a>
         </div>
 
     </section>
-{{--    <script>--}}
-{{--        $('.carousel.carousel-slider').carousel({fullWidth: true});--}}
+    {{--    <script>--}}
+    {{--        $('.carousel.carousel-slider').carousel({fullWidth: true});--}}
 
-{{--    </script>--}}
+    {{--    </script>--}}
     <script>
         $(document).ready(function () {
 
@@ -67,7 +67,8 @@
             });
             setInterval(function () {
                 $('.carousel').carousel('next');
-            }, 5000);
+            }, 10000);
+            $('.slider').slider();
         });
     </script>
 
