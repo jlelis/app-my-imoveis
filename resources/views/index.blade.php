@@ -3,6 +3,31 @@
 
     <section class="section">
 
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header "><i class="material-icons">search</i>Pesquisar</div>
+                <div class="collapsible-body">
+                    <form action="#" method="get">
+                        <div class="row">
+                            <div class="input-field col s12 m12 l4">
+                                <input type="text" name="descricao" id="descricao">
+                                <label for="">Descrição</label>
+                            </div>
+                            <div class="input-field col s12 m12 l4">
+                                <input type="text" name="valor_minino" id="valor_minino">
+                                <label for="">Valor Minino R$:</label>
+                            </div>
+                            <div class="input-field col s12 m12 l4">
+                                <input type="text" name="valor_maximo" id="valor_maximo">
+                                <label for="">Valor Máximo R$: </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </li>
+        </ul>
+
         @forelse($imoveis as $imovel)
 
             <div class="row">
