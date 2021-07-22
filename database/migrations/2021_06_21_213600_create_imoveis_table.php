@@ -26,6 +26,7 @@ class CreateImoveisTable extends Migration
             $table->foreignId('cidade_id')->constrained();
             $table->foreignId('tipo_id')->constrained();
             $table->foreignId('finalidade_id')->constrained();
+            $table->foreignId('user_id')->constrained();
 
             $table->timestamps();
         });

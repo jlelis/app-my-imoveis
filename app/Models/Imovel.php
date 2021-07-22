@@ -23,6 +23,7 @@ class Imovel extends Model
         'cidade_id',
         'tipo_id',
         'finalidade_id',
+        'user_id',
 
     ];
 
@@ -54,6 +55,9 @@ class Imovel extends Model
     public function imovelFotos()
     {
         return $this->hasMany(ImovelFoto::class,'imovel_id','id');
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
 }

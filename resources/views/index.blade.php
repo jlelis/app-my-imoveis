@@ -2,7 +2,7 @@
 @section('conteudo-principal')
 
     <section class="section">
-
+        {{--Barra de pesquisa--}}
         <ul class="collapsible">
             <li>
                 <div class="collapsible-header "><i class="material-icons">search</i>Pesquisar</div>
@@ -21,10 +21,16 @@
                                 <input type="text" name="valor_maximo" id="valor_maximo">
                                 <label for="">Valor Máximo R$: </label>
                             </div>
+                            <div>
+                                <input type="reset" class="btn-flat waves-effect  white-text green">
+
+                                <a href="#" class="btn-flat waves-effect white-text blue">
+                                    Pesquisar
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>
-
             </li>
         </ul>
 
@@ -84,6 +90,7 @@
 
                 @endforelse
             </div>
+
             <div class="fixed-action-btn">
                 <a class="btn-floating btn-large waves-effect waves-light" href="{{ route('imoveis.create') }}">
                     <i class="large material-icons">add</i>
@@ -92,6 +99,32 @@
 
 
     </section>
+    {{--Paginação --}}
+    <ul class="pagination center">
+        {{-- Previous Page Link --}}
+        @if ($imoveis->onFirstPage())
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        @else
+        <li class="waves-effect"><a href="{{ $imoveis->previousPageUrl() }}"><i class="material-icons">chevron_left</i></a></li>
+        @endif
+
+        {{-- Page Number Links --}}
+        @for($i=1; $i<=$imoveis->lastPage(); $i++)
+            @if($i==$imoveis->currentPage())
+                <li class="active"><a href="?page={{$i}}">{{$i}}</a></li>
+            @else
+                <li class="waves-effect"><a href="?page={{$i}}">{{$i}}</a></li>
+            @endif
+        @endfor
+
+        {{-- Next Page Link --}}
+        @if ($imoveis->hasMorePages())
+        <li class="waves-effect"><a href="{{ $imoveis->nextPageUrl() }}"><i class="material-icons">chevron_right</i></a></li>
+        @else
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        @endif
+    </ul>
+    {{--Scripts utilizado nessa tela--}}
     <script>
         $(document).ready(function() {
 

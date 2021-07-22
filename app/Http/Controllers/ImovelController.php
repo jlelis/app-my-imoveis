@@ -30,7 +30,8 @@ class ImovelController extends Controller
 //            ->orderBy('cidades.nome', 'asc')
 //            ->orderBy('enderecos.bairro', 'asc')
 //            ->orderBy('titulo', 'asc')
-            ->get();
+            // ->get()
+            ->paginate(9);
 //        dd($imoveis);
 
         return view('index', compact('imoveis',));
@@ -236,4 +237,28 @@ class ImovelController extends Controller
 
         }
     }
+    // public function ajax(Request $request, int $id = 0)
+    // {
+    //     $data = [];
+
+    //     if ($id) {
+
+    //         $data = Imovel::select('id', 'nome')
+    //             ->where('id', $id)
+    //             ->first();
+
+    //         return response()->json($data);
+    //     }
+
+    //     if (!$request->has('q')) {
+    //         $data = Imovel::select('id', 'descricao')->limit(10)->get();
+    //     } else {
+    //         $data = Imovel::select('id', 'descricao')
+    //             ->where('descricao', 'LIKE', "%$request->q%")
+    //             ->limit(10)
+    //             ->get();
+    //     }
+
+    //     return response()->json($data);
+    // }
 }

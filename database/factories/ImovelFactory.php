@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Imovel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ImovelFactory extends Factory
@@ -33,6 +34,7 @@ class ImovelFactory extends Factory
             'cidade_id' => rand(1, 5),
             'tipo_id' => rand(1, 2),
             'finalidade_id' => rand(1, 2),
+            'user_id'=>User::factory(),
 
         ];
     }

@@ -22,8 +22,9 @@ class ImovelFotoFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            'path_images' => $this->faker->imageUrl(640, 480),
+            'path_images' => $this->faker->imageUrl(640, 480,'House'),
             'imovel_id' => Imovel::factory()
         ];
     }
