@@ -28,33 +28,33 @@
             </li>
         </ul>
 
-        @forelse($imoveis as $imovel)
+
 
             <div class="row">
+                @forelse($imoveis as $imovel)
                 <div class="col s12 m4 l4">
                     <!--Card Inicial -->
                     <div class="card hoverable">
-                        <div class="card">
+                        <div class="card large">
                             <div class="card-image ">
                                 <div class="carousel carousel-slider" data-indicators="true">
                                     <div class="carousel-fixed-item center middle-indicator">
                                         <div class="left">
                                             <a href="Previo"
-                                                class="movePrevCarousel middle-indicator-text waves-effect waves-light content-indicator"><i
+                                               class="movePrevCarousel middle-indicator-text waves-effect waves-light content-indicator"><i
                                                     class="material-icons left  middle-indicator-text">chevron_left</i></a>
                                         </div>
 
                                         <div class="right">
                                             <a href="Siguiente"
-                                                class=" moveNextCarousel middle-indicator-text waves-effect waves-light content-indicator"><i
+                                               class=" moveNextCarousel middle-indicator-text waves-effect waves-light content-indicator"><i
                                                     class="material-icons right middle-indicator-text">chevron_right</i></a>
                                         </div>
                                     </div>
                                     @forelse($imovel->imovelFotos as $foto)
 
                                         <a class="carousel-item" href="{{ route('imoveis.show', $imovel->id) }}">
-                                            <img src="{{ $foto->path_images }}" class="responsive-img"
-                                                style="width: 100%; height: 100%;">
+                                            <img src="{{url($foto->path_images)}}" class="responsive-img" style="width: 100%; height: 100%;">
                                         </a>
 
                                     @empty
@@ -74,21 +74,21 @@
                             </div>
                             <div class="card-action center">
                                 <a href="{{ route('imoveis.show', $imovel->id) }}"
-                                    class="waves-effect waves-light btn-small">Mais Detalhes</a>
+                                   class="waves-effect waves-light btn-small">Mais Detalhes</a>
                             </div>
                         </div>
                     </div>
                     <br>
                 </div>
-            @empty
+                @empty
 
-        @endforelse
-        </div>
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large waves-effect waves-light" href="{{ route('imoveis.create') }}">
-                <i class="large material-icons">add</i>
-            </a>
-        </div>
+                @endforelse
+            </div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large waves-effect waves-light" href="{{ route('imoveis.create') }}">
+                    <i class="large material-icons">add</i>
+                </a>
+            </div>
 
 
     </section>
@@ -113,6 +113,11 @@
                 e.stopPropagation();
                 $('.carousel').carousel('prev');
             });
+
+
+        });
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
         });
     </script>
 

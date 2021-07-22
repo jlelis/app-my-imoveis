@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Endereco;
-use App\Models\Imovel;
+use App\Models\ImovelFoto;
 use Illuminate\Database\Seeder;
 
-class EnderecoSeeder extends Seeder
+class ImovelFotoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class EnderecoSeeder extends Seeder
      */
     public function run()
     {
-        Endereco::factory()->create();
+        ImovelFoto::factory()->create();
     }
 }

@@ -9,7 +9,7 @@
 
                     @forelse($imovel->imovelFotos as $foto)
                         <a class="carousel-item" href="#">
-                            <img src="{{$foto->path_images}}" class="responsive-img" style="width: 100%; height: 100%;">
+                            <img src="{{url($foto->path_images)}}" class="responsive-img" style="width: 100%; height: 100%;">
                         </a>
                     @empty
                     @endforelse
@@ -45,7 +45,7 @@
         </div>
         <hr>
         <div>
-            <a href="{{url()->previous()}}" class="btn-flat waves-effect  white-text red lighten-3">
+            <a href="{{route('imoveis.index')}}" class="btn-flat waves-effect  white-text red lighten-3">
                 Voltar
             </a>
             <a href="{{route('imoveis.edit',$imovel->id)}}" class="btn-flat waves-effect white-text blue">
