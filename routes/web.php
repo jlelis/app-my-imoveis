@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\ImovelController;
-use App\Http\Controllers\ProductController;
+use App\Models\Imovel;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('/imoveis', function (Request $request) {
+
+
+// });
+
 Route::resource('cidades', CidadeController::class);
+Route::get('pesquisa', [ImovelController::class,'getQuery'])->name('imoveis.getQuery');
 
 Route::resource('imoveis', ImovelController::class);
+
 
 Route::get('/', function () {
     return redirect()->route('imoveis.index');
 });
+

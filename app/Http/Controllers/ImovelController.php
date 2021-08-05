@@ -9,8 +9,11 @@ use App\Models\Imovel;
 use App\Models\ImovelFoto;
 use App\Models\Proximidade;
 use App\Models\Tipo;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+
 
 class ImovelController extends Controller
 {
@@ -19,23 +22,24 @@ class ImovelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $imoveis = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
-//            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
-//            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
-//            //fotos
-//            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
-//            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
-//            ->orderBy('cidades.nome', 'asc')
-//            ->orderBy('enderecos.bairro', 'asc')
-//            ->orderBy('titulo', 'asc')
+            //            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
+            //            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
+            //            //fotos
+            //            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
+            //            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
+            //            ->orderBy('cidades.nome', 'asc')
+            //            ->orderBy('enderecos.bairro', 'asc')
+            //            ->orderBy('titulo', 'asc')
             // ->get()
             ->paginate(9);
-//        dd($imoveis);
-
-        return view('index', compact('imoveis',));
-//        return view('admin.imoveis.index', compact('imoveis'));
+        //        dd($imoveis);
+        $finalidades = Finalidade::all();
+        return view('index', compact('imoveis', 'finalidades'));
+        //        return view('admin.imoveis.index', compact('imoveis'));
     }
 
     /**
@@ -51,8 +55,10 @@ class ImovelController extends Controller
         $tipos = Tipo::all();
 
         $action = route('imoveis.store');
-        return view('admin.imoveis.create',
-            compact('action', 'cidades', 'finalidades', 'tipos', 'proximidades'));
+        return view(
+            'admin.imoveis.create',
+            compact('action', 'cidades', 'finalidades', 'tipos', 'proximidades')
+        );
     }
 
     /**
@@ -70,10 +76,9 @@ class ImovelController extends Controller
             $imovel->endereco()->create($request->all());
 
             if ($request->has('proximidades')) {
-//                $imovel->proximidades()->attach($request->proximidades);
-//                $imovel->proximidades()->detach($request->proximidades);
+                //                $imovel->proximidades()->attach($request->proximidades);
+                //                $imovel->proximidades()->detach($request->proximidades);
                 $imovel->proximidades()->sync($request->proximidades);
-
             }
 
             //anexar de fotos
@@ -81,7 +86,7 @@ class ImovelController extends Controller
 
                 foreach ($request->file('imovel_fotos') as $file) {
 
-//                    $filename = $file->store('photos', 'public');
+                    //                    $filename = $file->store('photos', 'public');
                     $filename = $file->storeOnCloudinary('imoveis/' . $imovel->id)->getSecurePath();
 
                     ImovelFoto::create([
@@ -90,6 +95,13 @@ class ImovelController extends Controller
                     ]);
                 }
             }
+            // Deletar dps teste heroku
+            if (!App::environment('local')){
+                $user = User::find(1);
+                $imovel = $user->imoveis()->create($imovel);
+
+            }
+
 
 
             DB::commit();
@@ -100,10 +112,9 @@ class ImovelController extends Controller
             DB::rollBack();
             $request->session()->flash('erro', 'Imóvel Cadastrado com sucesso!' . $e->getMessage());
             return redirect()->route('imoveis.index');
-//                ->with('warning', 'Something Went Wrong!');
+            //                ->with('warning', 'Something Went Wrong!');
 
         }
-
     }
 
     /**
@@ -116,16 +127,16 @@ class ImovelController extends Controller
     {
 
         $imovel = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])->findOrFail($id);
-//        dd($imovel);
-//            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
-//            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
+        //        dd($imovel);
+        //            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
+        //            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
         //fotos
-//            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
-//            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
-//            ->orderBy('cidades.nome', 'asc')
-//            ->orderBy('enderecos.bairro', 'asc')
-//            ->orderBy('titulo', 'asc')
-//            ->find($id)->get();
+        //            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
+        //            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
+        //            ->orderBy('cidades.nome', 'asc')
+        //            ->orderBy('enderecos.bairro', 'asc')
+        //            ->orderBy('titulo', 'asc')
+        //            ->find($id)->get();
 
         return view('show', compact('imovel'));
     }
@@ -145,8 +156,10 @@ class ImovelController extends Controller
         $tipos = Tipo::all();
 
         $action = route('imoveis.update', $imovel->id);
-        return view('admin.imoveis.edit',
-            compact('action', 'imovel', 'cidades', 'finalidades', 'tipos', 'proximidades'));
+        return view(
+            'admin.imoveis.edit',
+            compact('action', 'imovel', 'cidades', 'finalidades', 'tipos', 'proximidades')
+        );
     }
 
     /**
@@ -227,7 +240,6 @@ class ImovelController extends Controller
 
             $request->session()->flash('sucesso', 'Imóvel excluído com sucesso!');
             return redirect()->route('imoveis.index');
-
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -237,28 +249,37 @@ class ImovelController extends Controller
 
         }
     }
-    // public function ajax(Request $request, int $id = 0)
-    // {
-    //     $data = [];
 
-    //     if ($id) {
+    public function getQuery(Request $request)
+    {
+        //  dd($request->all());
+        $query = Imovel::query();
 
-    //         $data = Imovel::select('id', 'nome')
-    //             ->where('id', $id)
-    //             ->first();
+        $termos = $request->only('titulo','descricao');
 
-    //         return response()->json($data);
-    //     }
+        foreach ($termos as $nome => $valor) {
+            if ($valor) {
+                $query->where($nome, 'LIKE', '%' . $valor . '%');
+            }
+        }
 
-    //     if (!$request->has('q')) {
-    //         $data = Imovel::select('id', 'descricao')->limit(10)->get();
-    //     } else {
-    //         $data = Imovel::select('id', 'descricao')
-    //             ->where('descricao', 'LIKE', "%$request->q%")
-    //             ->limit(10)
-    //             ->get();
-    //     }
+        // $iguais = $request->only('fornecedor_id', 'usuario_id', 'codigo_barra');
 
-    //     return response()->json($data);
-    // }
+        // foreach ($iguais as $nome => $valor) {
+        //     if ($valor) {
+        //         $query->where($nome, '=', $valor);
+        //     }
+        // }
+        // dd($query);
+        if(empty($query)) {
+            return "Não a Dados";
+          }else{
+            $imoveis = $query->paginate(9);
+            //   return view('apontamento.consulta')->with('a',$retorno[0]);
+            return view('admin.imoveis.index',compact('imoveis'));
+          }
+
+        // return $imoveis;
+
+    }
 }

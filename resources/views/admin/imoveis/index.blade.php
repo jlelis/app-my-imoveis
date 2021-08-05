@@ -52,6 +52,31 @@
             @endforelse
             </tbody>
         </table>
+        {{--Paginação --}}
+    <ul class="pagination center">
+        {{-- Previous Page Link --}}
+        @if ($imoveis->onFirstPage())
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        @else
+        <li class="waves-effect"><a href="{{ $imoveis->previousPageUrl() }}"><i class="material-icons">chevron_left</i></a></li>
+        @endif
+
+        {{-- Page Number Links --}}
+        @for($i=1; $i<=$imoveis->lastPage(); $i++)
+            @if($i==$imoveis->currentPage())
+                <li class="active"><a href="?page={{$i}}">{{$i}}</a></li>
+            @else
+                <li class="waves-effect"><a href="?page={{$i}}">{{$i}}</a></li>
+            @endif
+        @endfor
+
+        {{-- Next Page Link --}}
+        @if ($imoveis->hasMorePages())
+        <li class="waves-effect"><a href="{{ $imoveis->nextPageUrl() }}"><i class="material-icons">chevron_right</i></a></li>
+        @else
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        @endif
+    </ul>
 
         {{--        btn-floating btn-large waves-effect waves-light--}}
         <div class="fixed-action-btn">

@@ -2,12 +2,18 @@
 @section('conteudo-principal')
 
     <section class="section">
+        {{-- @if (env('APP_ENV')!='Production') --}}
+        @if(App::environment('local'))
+            Enviroment Local
+        @endif
+
         {{--Barra de pesquisa--}}
         <ul class="collapsible">
             <li>
                 <div class="collapsible-header "><i class="material-icons">search</i>Pesquisar</div>
                 <div class="collapsible-body">
-                    <form action="#" method="get">
+                    <form action="/pesquisa" method="GET">
+
                         <div class="row">
                             <div class="input-field col s12 m12 l4">
                                 <input type="text" name="descricao" id="descricao">
@@ -22,11 +28,10 @@
                                 <label for="">Valor Máximo R$: </label>
                             </div>
                             <div>
-                                <input type="reset" class="btn-flat waves-effect  white-text green">
+                                <input type="reset" class="btn-flat waves-effect  white-text green"/>
 
-                                <a href="#" class="btn-flat waves-effect white-text blue">
-                                    Pesquisar
-                                </a>
+                                <button class="btn-flat waves-effect white-text blue">Pesquisar</button>
+
                             </div>
                         </div>
                     </form>
