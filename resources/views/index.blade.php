@@ -3,9 +3,9 @@
 
     <section class="section">
         {{-- @if (env('APP_ENV')!='Production') --}}
-        @if(App::environment('local'))
+        {{-- @if(App::environment('local'))
             Enviroment Local
-        @endif
+        @endif --}}
 
         {{--Barra de pesquisa--}}
         <ul class="collapsible">
