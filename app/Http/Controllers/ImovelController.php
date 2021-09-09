@@ -9,9 +9,7 @@ use App\Models\Imovel;
 use App\Models\ImovelFoto;
 use App\Models\Proximidade;
 use App\Models\Tipo;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 
@@ -25,21 +23,29 @@ class ImovelController extends Controller
     public function index(Request $request)
     {
 
-        $imoveis = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
-            //            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
-            //            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
-            //            //fotos
-            //            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
-            //            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
-            //            ->orderBy('cidades.nome', 'asc')
-            //            ->orderBy('enderecos.bairro', 'asc')
-            //            ->orderBy('titulo', 'asc')
-            // ->get()
-            ->paginate(9);
-        //        dd($imoveis);
-        $finalidades = Finalidade::all();
-        return view('index', compact('imoveis', 'finalidades'));
-        //        return view('admin.imoveis.index', compact('imoveis'));
+        $imoveis = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos']);
+
+        if ($request->all()) {
+            if ($request->input('descricao')) {
+                $descricao = $request->input('descricao');
+                $imoveis = $imoveis->where('descricao', 'LIKE', '%' . $descricao . '%');
+            }
+            if ($request->input('valor_minino') && $request->input('valor_maximo')) {
+                $minimo = $request->input('valor_minino');
+                $maximo = $request->input('valor_maximo');
+
+                $imoveis = $imoveis->whereBetween('preco', [$minimo, $maximo]);
+            }
+
+
+            $imoveis = $imoveis->paginate(9);
+
+            return view('index', compact('imoveis'));
+        }
+        $imoveis = $imoveis->paginate(9);
+
+        return view('index', compact('imoveis'));
+
     }
 
     /**
@@ -69,10 +75,13 @@ class ImovelController extends Controller
      */
     public function store(ImovelRequest $request)
     {
+
         DB::beginTransaction();
         try {
+//            $user = User::where('id','=', 1)->get();
 
             $imovel = Imovel::create($request->all());
+//            $imovel->user()->create($user);//teste aqui
             $imovel->endereco()->create($request->all());
 
             if ($request->has('proximidades')) {
@@ -96,12 +105,11 @@ class ImovelController extends Controller
                 }
             }
             // Deletar dps teste heroku
-            if (!App::environment('local')){
-                $user = User::find(1);
-                $imovel = $user->imoveis()->create($imovel);
+//            if (!App::environment('local')){
+//                $user = User::find(1)->dd();
+//                $imovel = $user->imoveis()->save($imovel);
 
-            }
-
+//            }
 
 
             DB::commit();
@@ -127,16 +135,6 @@ class ImovelController extends Controller
     {
 
         $imovel = Imovel::with(['finalidade', 'endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])->findOrFail($id);
-        //        dd($imovel);
-        //            ->join('cidades', 'cidades.id', '=', 'imoveis.cidade_id')
-        //            ->join('enderecos', 'enderecos.imovel_id', '=', 'imoveis.id')
-        //fotos
-        //            ->join('imovel_fotos', 'imovel_fotos.imovel_id', '=', 'imoveis.id')
-        //            ->with(['finalidade','endereco', 'cidade', 'proximidades', 'tipo', 'imovelFotos'])
-        //            ->orderBy('cidades.nome', 'asc')
-        //            ->orderBy('enderecos.bairro', 'asc')
-        //            ->orderBy('titulo', 'asc')
-        //            ->find($id)->get();
 
         return view('show', compact('imovel'));
     }
@@ -255,7 +253,7 @@ class ImovelController extends Controller
         //  dd($request->all());
         $query = Imovel::query();
 
-        $termos = $request->only('titulo','descricao');
+        $termos = $request->only('titulo', 'descricao');
 
         foreach ($termos as $nome => $valor) {
             if ($valor) {
@@ -271,13 +269,13 @@ class ImovelController extends Controller
         //     }
         // }
         // dd($query);
-        if(empty($query)) {
+        if (empty($query)) {
             return "Não a Dados";
-          }else{
+        } else {
             $imoveis = $query->paginate(9);
             //   return view('apontamento.consulta')->with('a',$retorno[0]);
-            return view('admin.imoveis.index',compact('imoveis'));
-          }
+            return view('admin.imoveis.index', compact('imoveis'));
+        }
 
         // return $imoveis;
 

@@ -2,17 +2,13 @@
 @section('conteudo-principal')
 
     <section class="section">
-        {{-- @if (env('APP_ENV')!='Production') --}}
-        {{-- @if(App::environment('local'))
-            Enviroment Local
-        @endif --}}
 
         {{--Barra de pesquisa--}}
-        <ul class="collapsible">
+        <ul class="collapsible" data-collapsible="accordion">
             <li>
                 <div class="collapsible-header "><i class="material-icons">search</i>Pesquisar</div>
                 <div class="collapsible-body">
-                    <form action="/pesquisa" method="GET">
+                    <form action="{{ route('imoveis.index') }}" method="GET" id="form_id">
 
                         <div class="row">
                             <div class="input-field col s12 m12 l4">
@@ -21,7 +17,7 @@
                             </div>
                             <div class="input-field col s12 m12 l4">
                                 <input type="text" name="valor_minino" id="valor_minino">
-                                <label for="">Valor Minino R$:</label>
+                                <label for="">Valor Mínino R$:</label>
                             </div>
                             <div class="input-field col s12 m12 l4">
                                 <input type="text" name="valor_maximo" id="valor_maximo">
@@ -30,7 +26,8 @@
                             <div>
                                 <input type="reset" class="btn-flat waves-effect  white-text green"/>
 
-                                <button class="btn-flat waves-effect white-text blue">Pesquisar</button>
+                                <input type="submit" class="btn-flat waves-effect white-text blue" onclick="getClick();"
+                                       value="Pesquisar"/>
 
                             </div>
                         </div>
@@ -40,9 +37,8 @@
         </ul>
 
 
-
-            <div class="row">
-                @forelse($imoveis as $imovel)
+        <div class="row">
+            @forelse($imoveis as $imovel)
                 <div class="col s12 m4 l4">
                     <!--Card Inicial -->
                     <div class="card hoverable">
@@ -65,7 +61,8 @@
                                     @forelse($imovel->imovelFotos as $foto)
 
                                         <a class="carousel-item" href="{{ route('imoveis.show', $imovel->id) }}">
-                                            <img src="{{url($foto->path_images)}}" class="responsive-img" style="width: 100%; height: 100%;">
+                                            <img src="{{url($foto->path_images)}}" class="responsive-img"
+                                                 style="width: 100%; height: 100%;">
                                         </a>
 
                                     @empty
@@ -75,32 +72,72 @@
                             </div>
 
                             <div class="card-content">
-                                <p class="big"><strong>Valor R$:</strong>{{ number_format($imovel->preco, 2, ',', '.') }}
-                                </p>
-                                <p class="big"><strong>Cidade: </strong>{{ $imovel->cidade->nome }}</p>
-                                <p class="big"><strong>Bairro: </strong> {{ $imovel->endereco->bairro }}</p>
-                                <p class="big"><strong>Rua: </strong> {{ $imovel->endereco->rua }}</p>
 
 
+                                <p class="center-align"><strong>{{ $imovel->cidade->nome }}</strong></p>
+
+
+                                {{--                                <p class="big"><strong>Bairro: </strong> {{ $imovel->endereco->bairro }}</p>--}}
+                                {{--                                <p class="big"><strong>Rua: </strong> {{ $imovel->endereco->rua }}</p>--}}
+                                {{--                                    <i class="material-icons-outlined">--}}
+                                {{--bed--}}
+                                {{--</i>--}}
+
+
+                                <div class="row">
+                                    <div class="col s6">
+                                        <p class="big"><span class="inline-icon material-icons-outlined">hotel</span>
+                                            {{$imovel->dormitorios}}
+                                        </p>
+                                        <p class="big">
+                                            <span
+                                                class="inline-icon material-icons-outlined">directions_car_filled</span>
+                                            {{$imovel->garagens}}
+                                        </p>
+                                    </div>
+
+
+                                    <div class="col s6">
+                                        <p class="big">
+                                        <span
+                                            class="inline-icon material-icons-outlined">bathtub</span>
+                                            {{$imovel->banheiros}}
+                                        </p>
+
+                                        <p class="big">
+                                            <span class="inline-icon material-icons-outlined">straighten</span>
+                                            {{$imovel->terreno}} m²
+                                        </p>
+
+                                    </div>
+                                    <div class="col s12 ">
+                                        <p class="center-align"><strong>Total
+                                                R$: </strong>{{ number_format($imovel->preco, 2, ',', '.') }}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-action center">
                                 <a href="{{ route('imoveis.show', $imovel->id) }}"
                                    class="waves-effect waves-light btn-small">Mais Detalhes</a>
                             </div>
+
                         </div>
+
                     </div>
                     <br>
+
                 </div>
-                @empty
+            @empty
 
-                @endforelse
-            </div>
+            @endforelse
+        </div>
 
-            <div class="fixed-action-btn">
-                <a class="btn-floating btn-large waves-effect waves-light" href="{{ route('imoveis.create') }}">
-                    <i class="large material-icons">add</i>
-                </a>
-            </div>
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large waves-effect waves-light" href="{{ route('imoveis.create') }}">
+                <i class="large material-icons">add</i>
+            </a>
+        </div>
 
 
     </section>
@@ -108,9 +145,10 @@
     <ul class="pagination center">
         {{-- Previous Page Link --}}
         @if ($imoveis->onFirstPage())
-        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
         @else
-        <li class="waves-effect"><a href="{{ $imoveis->previousPageUrl() }}"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect"><a href="{{ $imoveis->previousPageUrl() }}"><i
+                        class="material-icons">chevron_left</i></a></li>
         @endif
 
         {{-- Page Number Links --}}
@@ -124,14 +162,16 @@
 
         {{-- Next Page Link --}}
         @if ($imoveis->hasMorePages())
-        <li class="waves-effect"><a href="{{ $imoveis->nextPageUrl() }}"><i class="material-icons">chevron_right</i></a></li>
+            <li class="waves-effect"><a href="{{ $imoveis->nextPageUrl() }}"><i class="material-icons">chevron_right</i></a>
+            </li>
         @else
-        <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
         @endif
     </ul>
     {{--Scripts utilizado nessa tela--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             $('.carousel.carousel-slider').carousel({
                 fullWidth: true,
@@ -139,14 +179,14 @@
             });
 
             // move next carousel
-            $('.moveNextCarousel').click(function(e) {
+            $('.moveNextCarousel').click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('.carousel').carousel('next');
             });
 
             // move prev carousel
-            $('.movePrevCarousel').click(function(e) {
+            $('.movePrevCarousel').click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('.carousel').carousel('prev');
@@ -154,9 +194,16 @@
 
 
         });
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.collapsible').collapsible();
         });
+    </script>
+    <script>
+        function stopDefAction(evt) {
+            evt.preventDefault();
+        }
+        document.getElementById('form_id').addEventListener(
+            'click', topDefAction, false);
     </script>
 
 @endsection

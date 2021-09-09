@@ -11,11 +11,13 @@
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=outline -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
           integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <!-- Jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -29,10 +31,16 @@
     <style>
         p.big {
             line-height: 1.5;
+            padding: 2px;
         }
 
         .carousel-slider {
             height: 300px !important;
+        }
+        .inline-icon {
+            vertical-align: bottom;
+            font-size: 24px !important;
+            margin-left: 3vh;
         }
 
         /* just for jsfiddle */
@@ -134,12 +142,12 @@
     M.toast({html: "{{ session('erro') }}"});
     @endif
     {{-- Selects --}}
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
+    document.addEventListener('DOMContentLoaded', function () {
+        var select = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(select);
     });
     {{-- Menu Mobile --}}
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems);
     });

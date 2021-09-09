@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
             FinalidadeSeeder::class,
             ProximidadeSeeder::class,
             CidadeSeeder::class,
-            //UserSeeder::class,
+            UserSeeder::class,
             //EnderecoSeeder::class,
 
-            ImovelSeeder::class,
+            //ImovelSeeder::class,
             //ImovelFotoSeeder::class,
 
         ]);

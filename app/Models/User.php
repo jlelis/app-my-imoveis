@@ -42,6 +42,6 @@ class User extends Authenticatable
     ];
     public function imoveis()
     {
-       return $this->hasMany(Imovel::class);
+       return $this->hasMany(Imovel::class,'user_id','id');
     }
 }

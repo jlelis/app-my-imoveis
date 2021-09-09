@@ -15,78 +15,12 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
           integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <!-- Jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    {{-- <!-- Compiled and minified JavaScript --> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" --}}
-    {{-- integrity="sha512-NiWqa2rceHnN3Z5j6mSAvbwwg3tiwVNxiAQaaSMSXnRRDh5C2mk/+sKQRw8qjV1vN4nf8iK2a0b048PnHbyx+Q==" --}}
-    {{-- crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-
-    <style>
-        p.big {
-            line-height: 1.5;
-        }
-
-        .carousel-slider {
-            height: 300px !important;
-        }
-
-        /* just for jsfiddle */
-        @font-face {
-            font-family: "Material Icons";
-            font-style: normal;
-            font-weight: 400;
-            src: local("Material Icons"), local("MaterialIcons-Regular"),
-            url(https://fonts.gstatic.com/s/materialicons/v18/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format("woff2");
-        }
-
-        .material-icons {
-            font-family: "Material Icons";
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -moz-font-feature-settings: "liga";
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .middle-indicator {
-            position: absolute;
-            top: 50%;
-        }
-
-        .middle-indicator-text {
-            font-size: 4.2rem;
-        }
-
-        a.middle-indicator-text {
-            color: white !important;
-        }
-
-        .content-indicator {
-            width: 64px;
-            height: 64px;
-            background: none;
-            -moz-border-radius: 50px;
-            -webkit-border-radius: 50px;
-            border-radius: 50px;
-        }
-
-        .indicators {
-            visibility: hidden;
-        }
-
-    </style>
     <title>my-app-imóveis</title>
 </head>
 
@@ -117,7 +51,11 @@
     <li><a href="#">Contact</a></li>
 </ul>
 
-{{-- conteudo principal --}}
+
+{{-- Slider --}}
+@yield('slider')
+
+{{-- Conteudo Principal --}}
 <div class="container">
     @yield('conteudo-principal')
 </div>
@@ -126,27 +64,15 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
-    {{-- Iniciar os script materialize --}}
-    M.AutoInit();
-    @if (session('sucesso'))
-    M.toast({html: "{{ session('sucesso') }}"});
-    @elseif(session('erro'))
-    M.toast({html: "{{ session('erro') }}"});
-    @endif
-    {{-- Selects --}}
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
-    });
-    {{-- Menu Mobile --}}
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems);
-    });
-    {{-- Carrosel --}}
+    document.addEventListener('DOMContentLoaded', function () {
+        var sliders = document.querySelectorAll('.slider');
 
-    {{-- textarea redimencionar auto --}}
-    M.textareaAutoResize($('#descricao'));
+        M.Slider.init(sliders, {
+            indicators: false,
+            height: 400,
+            interval: 3000
+        });
+    });
 </script>
 
 </body>

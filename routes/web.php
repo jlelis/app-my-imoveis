@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 // });
 
 Route::resource('cidades', CidadeController::class);
-Route::get('pesquisa', [ImovelController::class,'getQuery'])->name('imoveis.getQuery');
 
 Route::resource('imoveis', ImovelController::class);
 
