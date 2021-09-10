@@ -1,4 +1,4 @@
-# Em contrução..
+# Em construção..
 #### projeto My-Imovel - Imobiliária Fake
 
 Para instalação serão necessários atender alguns dos requisitos mínimos:
